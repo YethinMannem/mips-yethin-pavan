@@ -19,7 +19,19 @@ in valid registers function
 in execute operation function
   :the register values are updated here
   
-  
+  we used 32 registers
+  it works for add sub mul div addi ori lw sw beq bne j la 
+  add r1,r2,r3   r1=r2+r3
+  sub r1,r2,r3   r1=r2-r3
+  mul r1,r2,r3    r1=r2*r3      r denotes registers,v denotes constants,labels
+  div r1,r2,r3    r1=r2/r3 
+  addi r1,r2,v    r1=r2+v
+  lw r1,v(r2)    r1=valof r2+v/4 value
+  sw r1,v(r2)    val of r2+v/4=r1
+  j   label      jump to label
+  beq r1,r2,label     if r1==r2 jump to label
+  bne r1,r2,label      if r1!=r2 jump to label
+  sample code is shown in for.s file 
   
   //////////////////////////////////////////////////////////////////////////////
   contributions:

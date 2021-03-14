@@ -25,8 +25,8 @@ in execute operation function
   contributions:
   discussed among us how to implement functions and in solving errors
   implemented
-  pavan sahith:- run(),read_instruction()
-  yethin:-valid register,execute present operation
+  cs19b017pavan sahith:- run(),read_instruction()
+  cs19b027yethin:-valid register,execute present operation
         
   
   

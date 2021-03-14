@@ -23,6 +23,10 @@ in execute operation function
   
   //////////////////////////////////////////////////////////////////////////////
   contributions:
+  discussed among us how to implement functions and in solving errors
+  implemented
+  pavan sahith:- run(),read_instruction()
+  yethin:-valid register,execute present operation
         
   
   

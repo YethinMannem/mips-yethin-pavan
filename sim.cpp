@@ -131,10 +131,11 @@ void simulator::run(){
        
         cout<<pc;
         string s2=program[pc];
-        
-        cout<<present_instruction<<"..............................."<<endl;
        
         RemoveSpaces(s2);
+        if(s2=="stop"){
+            pc=number_of_instructions+1;
+        }
         if(s2==""){
             pc++;
             continue;
@@ -188,7 +189,6 @@ void simulator::read_instruction(int line_number){
         count++;
     }
     operation =present_instruction.substr(0,count);
-    cout<<operation<<"000"<<"1111111111111111111111111111111111111111111111111"<<endl;
     string registers_in_instruction;
     if(count<present_instruction.size()-1)
         registers_in_instruction=present_instruction.substr(count+1);
@@ -343,9 +343,11 @@ void simulator::execute_present_operation(int n){
             pc = registers_in_present_instruction[0];
         break;
         case 16:
+       
             cout<<registers_in_present_instruction[0]<<endl;
             cout<<registers_in_present_instruction[1]<<endl;
             value_of_registers[registers_in_present_instruction[0]]=registers_in_present_instruction[1];
+            cout<<value_of_registers[registers_in_present_instruction[0]]<<endl;
             pc++;
         break;
         case 17:
@@ -353,7 +355,7 @@ void simulator::execute_present_operation(int n){
         break;
     }
 }
-//void simulator::add
+
 void simulator::valid_register(string s,int n){
     vector <string> tokens;
     stringstream commas(s);
@@ -366,6 +368,7 @@ void simulator::valid_register(string s,int n){
     }
     int x=tokens.size();
     cout<<x<<endl;
+    
     for(int i=0;i<tokens.size();i++){
         cout<<tokens[i]<<endl;
     }
@@ -384,13 +387,13 @@ void simulator::valid_register(string s,int n){
             }  
     }
     else if(n==10 && x==3){
-       // cout<<"tttttttttttttttttttttttttttttttttttttttttttttt"<<endl;
+       
         for(int i=0;i<2;i++){
             for(int j=0;j<32;j++){
                 if(tokens[i]==registers[j]){
                     
                     registers_in_present_instruction[i]=j;
-                    cout<<registers_in_present_instruction[i]<<"jjjjjjjjjjjjjjjjjjj"<<endl;
+                   // cout<<registers_in_present_instruction[i]<<"jjjjjjjjjjjjjjjjjjj"<<endl;
                     y++;
                 }
             }
@@ -409,10 +412,32 @@ void simulator::valid_register(string s,int n){
          string s1=tokens[1];
         int offset=-1;
         int x=s1.find("(");
-        offset=stoi(s1.substr(0,x));
-
+        char c=s1[0];
         int z=s1.find(")");
-        string s2 = s1.substr(x+2,z-x-2);
+        string s2="";
+        
+        if(c=='0' || c=='1' || c=='2' || c=='3' || c=='4'|| c=='5' || c=='6' || c=='7' || c=='8' || c=='9'){
+           offset=stoi(s1.substr(0,x));
+           //cout<<offset<<">>>>>>>>>>>>>>>>>>"<<endl;
+          s2=s1.substr(x+2,z-x-2);
+         
+        }
+        else{
+           
+            cout<<s1<<endl;
+            cout<<x<<endl;
+            cout<<z<<endl;
+            s2=s1.substr(x+2,z-x-2);
+            
+            for(int i=0;i<32;i++){
+                if(s2==registers[i]){
+                    offset=value_of_registers[i];
+                   // cout<<offset<<"??????????????????????"<<endl;
+                    break;
+                }
+            }
+        } 
+       // string s2 = s1.substr(x+2,z-x-2);
         for(int i=0;i<32;i++){
             if(registers[i]==tokens[0]){
                 registers_in_present_instruction[0]=i;
@@ -432,8 +457,6 @@ void simulator::valid_register(string s,int n){
         cout<<registers_in_present_instruction[0]<<endl;
         cout<<registers_in_present_instruction[1]<<endl;
         cout<<registers_in_present_instruction[2]<<endl;
-      //  cout<<tokens[0]<<"||||||||||||||||||||||||||||||||||||"<<endl;
-      //  cout<<s2<<"++++++++++++++++++++++++++++++++++++"<<endl;
       
         if(y!=2){
         cout<<"wrong"<<endl;
@@ -478,7 +501,6 @@ void simulator::valid_register(string s,int n){
         }
     }
     else if(n==16){
-    // cout<<"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"<<endl;
         for(int j=0;j<32;j++){
             if(tokens[0]==registers[j]){
                     registers_in_present_instruction[0]=j;

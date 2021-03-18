@@ -27,12 +27,15 @@ in execute operation function
   div r1,r2,r3    r1=r2/r3 
   addi r1,r2,v    r1=r2+v
   lw r1,v(r2)    r1=valof r2+v/4 value
+  lw r2,r3(r4)
   sw r1,v(r2)    val of r2+v/4=r1
   j   label      jump to label
   beq r1,r2,label     if r1==r2 jump to label
   bne r1,r2,label      if r1!=r2 jump to label
-  sample code is shown in for.s file 
+  if it sees the stop command it exits from the code and displays the contents of registers
   
+  sample code is shown in for.s and coo1.sfile 
+  code should start with .data followed by datasegment if needed then on .text then main:
   //////////////////////////////////////////////////////////////////////////////
   contributions:
   discussed among us how to implement functions and in solving errors

@@ -246,33 +246,33 @@ void simulator::read_instruction(int line_number){
 void simulator::execute_present_operation(int n){
     switch(n){
         case 0:
-        if(registers_in_present_instruction[0]!=0 && registers_in_present_instruction[0]!=1 && registers_in_present_instruction[1]!=1 && registers_in_present_instruction[2]!=1){ 
+        
 		value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]]+value_of_registers[registers_in_present_instruction[2]]; 
-        }
+        
         pc++;
         break;
         case 1:
-        if(registers_in_present_instruction[0]!=0 && registers_in_present_instruction[0]!=1 && registers_in_present_instruction[1]!=1 && registers_in_present_instruction[2]!=1){ 
+        
 		value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]]-value_of_registers[registers_in_present_instruction[2]]; 
-        }
+        
         pc++;
         break;
         case 2:
-        if(registers_in_present_instruction[0]!=0 && registers_in_present_instruction[0]!=1 && registers_in_present_instruction[1]!=1 && registers_in_present_instruction[2]!=1){ 
+       
 		value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]]*value_of_registers[registers_in_present_instruction[2]]; 
-        }
+        
         pc++;
         break;
         case 3:
-        if(registers_in_present_instruction[0]!=0 && registers_in_present_instruction[0]!=1 && registers_in_present_instruction[1]!=1 && registers_in_present_instruction[2]!=1){ 
+        
 		value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]] & value_of_registers[registers_in_present_instruction[2]]; 
-        }
+        
         pc++;
         break;
         case 4:
-        if(registers_in_present_instruction[0]!=0 && registers_in_present_instruction[0]!=1 && registers_in_present_instruction[1]!=1 && registers_in_present_instruction[2]!=1){ 
+       
 		value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]]|value_of_registers[registers_in_present_instruction[2]]; 
-        }
+        
         pc++;
         break;
         case 5:
@@ -283,21 +283,21 @@ void simulator::execute_present_operation(int n){
         break;
         case 7:
            
-            cout<<registers_in_present_instruction[0]<<endl;
-            cout<<registers_in_present_instruction[2]<<endl;
+           // cout<<registers_in_present_instruction[0]<<endl;
+           // cout<<registers_in_present_instruction[2]<<endl;
             value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]]+registers_in_present_instruction[2];
             pc++;
             break;
         case 8:
-            cout<<registers_in_present_instruction[0]<<endl;
-            cout<<registers_in_present_instruction[2]<<endl;
+          //  cout<<registers_in_present_instruction[0]<<endl;
+           // cout<<registers_in_present_instruction[2]<<endl;
             value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]] & registers_in_present_instruction[2];
             pc++;
             break;
         break;
         case 9:
-            cout<<registers_in_present_instruction[0]<<endl;
-            cout<<registers_in_present_instruction[2]<<endl;
+          //  cout<<registers_in_present_instruction[0]<<endl;
+          //  cout<<registers_in_present_instruction[2]<<endl;
             value_of_registers[registers_in_present_instruction[0]]=value_of_registers[registers_in_present_instruction[1]] | registers_in_present_instruction[2];
             pc++;
             break;
@@ -307,18 +307,18 @@ void simulator::execute_present_operation(int n){
         break;
         case 11:
            
-             cout<<registers_in_present_instruction[0]<<endl;
-              cout<<registers_in_present_instruction[1]<<endl;
-             cout<<registers_in_present_instruction[2]<<endl;
+           //  cout<<registers_in_present_instruction[0]<<endl;
+             // cout<<registers_in_present_instruction[1]<<endl;
+            // cout<<registers_in_present_instruction[2]<<endl;
              value_of_registers[registers_in_present_instruction[0]]=memory_element_values[value_of_registers[registers_in_present_instruction[1]]+registers_in_present_instruction[2]/4];
-             cout<<memory_element_values[value_of_registers[registers_in_present_instruction[1]]+registers_in_present_instruction[2]/4]<<"mmmmmmmmmmmmmmmm"<<endl;
+           //  cout<<memory_element_values[value_of_registers[registers_in_present_instruction[1]]+registers_in_present_instruction[2]/4]<<"mmmmmmmmmmmmmmmm"<<endl;
             pc++;
         break;
         case 12:
             
-             cout<<registers_in_present_instruction[0]<<endl;
-              cout<<registers_in_present_instruction[1]<<endl;
-             cout<<registers_in_present_instruction[2]<<endl;
+            // cout<<registers_in_present_instruction[0]<<endl;
+            //  cout<<registers_in_present_instruction[1]<<endl;
+           //  cout<<registers_in_present_instruction[2]<<endl;
              memory_element_values[value_of_registers[registers_in_present_instruction[1]]+registers_in_present_instruction[2]/4]=value_of_registers[registers_in_present_instruction[0]];
             
             pc++; 
@@ -344,10 +344,10 @@ void simulator::execute_present_operation(int n){
         break;
         case 16:
        
-            cout<<registers_in_present_instruction[0]<<endl;
-            cout<<registers_in_present_instruction[1]<<endl;
+           // cout<<registers_in_present_instruction[0]<<endl;
+          //  cout<<registers_in_present_instruction[1]<<endl;
             value_of_registers[registers_in_present_instruction[0]]=registers_in_present_instruction[1];
-            cout<<value_of_registers[registers_in_present_instruction[0]]<<endl;
+          //  cout<<value_of_registers[registers_in_present_instruction[0]]<<endl;
             pc++;
         break;
         case 17:

@@ -41,7 +41,7 @@ in execute operation function
   discussed among us how to implement functions and in solving errors
   implemented
   cs19b017pavan sahith:- run(),read_instruction()
-  cs19b027yethin:-valid register,execute present operation
+  cs19b026yethin:-valid register,execute present operation
         
   
   

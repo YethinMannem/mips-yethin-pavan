@@ -1140,7 +1140,7 @@ void simulator::display(){
     for(int b=0;b<instructions_with_stalls.size();b++){
         cout<<instructions_with_stalls[b]<<endl;
     }
-    cout<<"     IPS    "<<(float)(no_of_instructions_executed)/clockcycles;
+    cout<<"     IPS    "<<(float)(no_of_instructions_executed)/clockcycle;
      
 }
 

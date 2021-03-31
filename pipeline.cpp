@@ -595,7 +595,7 @@ int simulator::is_there_datahazard(int n){
         int reg_pres_type = each_instruction_info[each_instruction_info.size()-1].typeo;
         int reg_prev_type = each_instruction_info[each_instruction_info.size()-2].typeo;
         if(reg_pres_type==15){
-            x1=2;
+            x2=2;
         }
         else if(reg_pres_type==13 || reg_pres_type==14){
             if(each_instruction_info[each_instruction_info.size()-1].r1==reg_dest_prev ||each_instruction_info[each_instruction_info.size()-1].r2==reg_dest_prev ){

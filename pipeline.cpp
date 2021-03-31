@@ -60,6 +60,7 @@ class simulator{
     int clockcycle;
     int stalls;
     int main_found;
+    int no_of_instructions_executed;
     string instruction_fetch(int n);
     int * instruction_drf(string s);
     int is_there_datahazard(int n);
@@ -185,7 +186,7 @@ void simulator::run(){
        
         int type_of_operation = idrf_regs[3];
        // bool is_there_datahazard(pc-main_found);
-
+	no_of_instructions_executed++;
         int exe_val = instruction_execute(type_of_operation);
         int mem_val = instruction_memory(exe_val,type_of_operation);
         instruction_writeback(mem_val,type_of_operation);
@@ -644,6 +645,7 @@ simulator::simulator(ifstream& file,int need){
    
     number_of_instructions=0;
     pc=0;
+    no_of_instructions_executed=0;
     if(need==1){
     data_forwarding_enabled=true;
     }
@@ -1130,13 +1132,15 @@ void simulator::display(){
      for(int i=0;i<32;i++){
          cout<<registers[i]<<"  "<<value_of_registers[i]<<endl;
      }
+	clockcycle = clockcycle+3;
      cout<<"stalls in program"<<total_stalls;
-     cout<<"clockcycles taken"<<clockcycle+3;
+     cout<<"clockcycles taken"<<clockcycle;
     cout<<data_forwarding_enabled<<endl;
    
     for(int b=0;b<instructions_with_stalls.size();b++){
         cout<<instructions_with_stalls[b]<<endl;
     }
+    cout<<"     IPS    "<<(float)(no_of_instructions_executed)/clockcycles;
      
 }
 

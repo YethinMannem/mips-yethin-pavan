@@ -31,4 +31,6 @@ If it is branch instruction we get extra 2 stalls as the correct destination isk
 
 with data forwarding
 if it is first instruction no stalls
-if it is second instruction:-  check dependency with the above instruction if dependent:- if it is lw or sw (as we get the required value after mem stage) so to do mem_wb to dec_exec we need towait 1 stall 
+if it is second instruction:-  check dependency with the above instruction if dependent:- if it is lw or sw (as we get the required value after mem stage) so to do mem_wb to dec_exec we need towait 1 stall from after we will not hve stalls
+
+lw error in sim.cpp corrected here 

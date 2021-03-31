@@ -1135,7 +1135,7 @@ void simulator::display(){
 	clockcycle = clockcycle+3;
      cout<<"stalls in program"<<total_stalls;
      cout<<"clockcycles taken"<<clockcycle;
-    cout<<data_forwarding_enabled<<endl;
+    //cout<<data_forwarding_enabled<<endl;
    
     for(int b=0;b<instructions_with_stalls.size();b++){
         cout<<instructions_with_stalls[b]<<endl;

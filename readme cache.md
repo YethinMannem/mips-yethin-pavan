@@ -67,5 +67,5 @@ for different block size difference comes when relaced block to be checked in ot
 
 == input ==
 cache size,block size,latency,assosciativity for 2 level caches
- 
+ enter cachesize and block size in bytes
  

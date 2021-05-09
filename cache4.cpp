@@ -1925,7 +1925,7 @@ void simulator::valid_register(string s,int n){ // valid register method
                 found=1;
             }
         }
-        cout<<"vvvvvvvaaaaaaallllliiiiiiiiiddddddiiiiiitttttttttttyyyyyyyyyyy"<<endl;
+      //  cout<<"vvvvvvvaaaaaaallllliiiiiiiiiddddddiiiiiitttttttttttyyyyyyyyyyy"<<endl;
         if(found==0){
             cout<<"wrong label name is written";
         }
@@ -1978,20 +1978,45 @@ void simulator::display(){ // display function
 int main(){
     ifstream file;
     int need;
+    cin>>need;
     cout<<"need data forwarding 1/0";
-    int cache_size = 8;
+   /* int cache_size = 8;
     int block_size = 2;
     int assosciativity = 2;
     int cache_size_2 = 16;
     int block_size_2 = 2;
-    int assosciativity_2 = 2;
+    int assosciativity_2 = 2;*/
+    int cache_size;
+    int block_size;
+    int assosciativity;
+    int cache_size_2;
+    int block_size_2;
+    int assosciativity_2;
+    cout<<"enter cache size for level1"<<endl;
+    cin>>cache_size;
+    cout<<"enter block size for level1"<<endl;
+    cin>>block_size;
+    cout<<"enter assosciativity for level1"<<endl;
+    cin>>assosciativity;
+    cout<<"enter cache size for level2"<<endl;
+    cin>>cache_size_2;
+    cout<<"enter block size for level2"<<endl;
+    cin>>block_size_2;
+    cout<<"enter assosciativity for level2"<<endl;
+    cin>>assosciativity_2;
     Cache level1 = design_level_cache(cache_size,block_size,assosciativity);
     Cache level2 = design_level_cache(cache_size_2,block_size_2,assosciativity_2);
     int cache_latency1;
     int cache_latency2;
     int main_memory_latency;
+    cout<<"enter cache latency for level1"<<endl;
+    cin>>cache_latency1;
+    cout<<"enter cache latency for level2"<<endl;
+    cin>>cache_latency2;
+    cout<<"enter main memory latency"<<endl;
+    cin>>main_memory_latency;
 //////////////////////////////////////////////////////////////////////////////////    
-    cin>>need;
+    
      simulator s(file,need,level1,level2,block_size,block_size_2,cache_latency1,cache_latency2,main_memory_latency);
      s.run();
      s.display();

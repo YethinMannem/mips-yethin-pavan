@@ -61,7 +61,9 @@ hit rate = no of hits/no of lwsw instructions
 
     
  
- 
+=== limitations ==
+we used caches with same block size
+for different block size difference comes when relaced block to be checked in other cache this case we have to check all the address of data in the other cache
  
  
  

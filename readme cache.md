@@ -53,7 +53,12 @@ to keep in level1 2 cases
   2. else
     apply lru policy to know which block to be changed
     check whether same address block is there in level1
-    if there change its lru dirty and data element values
+    if there change its lru dirty and data element values and the check it in the level1 same process
+2. if there is no empty space in level1 
+   apply lru policy to replace and again same process as above to check 2 cases
+
+hit rate = no of hits/no of lwsw instructions
+
     
  
  

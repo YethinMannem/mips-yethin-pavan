@@ -36,12 +36,7 @@ in execute operation function
   
   sample code is shown in for.s and coo1.sfile 
   code should start with .data followed by datasegment if needed then on .text then main:
-  //////////////////////////////////////////////////////////////////////////////
-  contributions:
-  discussed among us how to implement functions and in solving errors
-  implemented
-  cs19b017pavan sahith:- run(),read_instruction()
-  cs19b026yethin:-valid register,execute present operation
+  
         
   
   

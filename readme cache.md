@@ -1,71 +1,122 @@
-==================== mips simulator with pipelining,forwarding and cache =======================
-we implemented a 2 level cache
-inputs
-user need to input cache size,block size and assosciativity for both level caches
-(cache->sets->blocks->data)
-blocks will have dirty bit,tag,data elements
-cache is mainly used to access the data fast as it will be close to the cpu
-==design cache==
-First we design these 2 caches based on their cache size,block size and assosciativity
-number of sets in a cache = cache size/(block size * assosciativity)
-number of blocks in set = assosciativity (i.e if assosciativity is 2 we will have 2 blocks in a set)
-number of elements(data) = block size
-each set will have a index to differentiate,block will have tag and data element will have offset
-== initialising cache==
-At start we initialized the tag of all blocks as "NULL" and data as -1000000
-== dividing address ==
-when we have instructions that need to access the memory such as lw and sw we use it.
-we considered address as a string we need to divide it into 3 parts tag,index and offset
-we require log2(block size) bits to represent offset
-and log2(number of sets in cache) bits to represent index
-the remaining bits will be for the tag
-that is when we have lw or sw instructions we first check the caches and then go to the main memory
-=== checking process ==
-we first divide the address to tag,index and offset based on the cache
-then we first use index to go to a particular set
-then tag to search the blocks in that set
-then use offset bits go take or change the particular data element
-== cases ==
+# **MIPS Simulator with Pipelining, Forwarding, and Two-Level Cache**
 
-== found in level 1 cache (hit in level1 cache) ==
-if instruction is lw we take the required data element
-if instruction is sw we change that particular data element and make dirty bit 1
+## **Overview**
+This project implements a **MIPS simulator** with the following features:
+- **Five-stage Pipelining** (Instruction Fetch, Decode, Execute, Memory, Write-back)
+- **Data Forwarding** for reducing stalls
+- **Two-Level Cache (L1 & L2)** for optimized memory access
+- **Configurable Cache Parameters** (Cache Size, Block Size, Associativity, Latency)
 
-== not found in level1 , found in level2(i.e, hit in level2 cache) ==
-if lw we take the data element , if sw we change that element and make dirty bit 1
-we have to keep this in level1 also
-2 cases 
- == if there is empty place in level1 ==
- then we can put the tag and data elements into that block
- == if there is no empty place ==
- we have to apply lru policy here
- first we have to find out the least recently used block based on the lru value
- then we can have that blocks address
- here before changing the values here chek whether the same address block is present in level2 cache 
- if it exits update the block in level2(i.e data if changed,dirty bit and lru) 
- then replace the block in level1 cache
+## **Inputs**
+Users need to input the following parameters for both **L1 and L2 caches**:
+- **Cache Size** (in bytes)
+- **Block Size** (in bytes)
+- **Associativity** (Direct-mapped, 2-way, 4-way, etc.)
+- **Latency** (Access time in cycles)
 
-== not found in level1 and level2 (miss in both caches) ==
-to keep in level1 2 cases
-1. if there is empty space we can fill that with respective tag and data elements
-  == here we have 2 cases with level2==
-  1. if there is an empty space in level2 cache we can fill it
-  2. else
-    apply lru policy to know which block to be changed
-    check whether same address block is there in level1
-    if there change its lru dirty and data element values and the check it in the level1 same process
-2. if there is no empty space in level1 
-   apply lru policy to replace and again same process as above to check 2 cases
+---
 
-hit rate = no of hits/no of lwsw instructions
+## **Cache Design**
+### **1. Structure of Cache**
+Each cache consists of:
+- **Sets** → Contain multiple blocks.
+- **Blocks** → Contain:
+  - **Tag** → Identifies memory block.
+  - **Data** → Stores data elements.
+  - **Dirty Bit** → Indicates if data is modified.
+  - **LRU Counter** → Tracks least recently used block.
 
-    
- 
-=== limitations ==
-we used caches with same block size
-for different block size difference comes when relaced block to be checked in other cache this case we have to check all the address of data in the other cache
+### **2. Cache Calculations**
+- **Number of Sets** = `Cache Size / (Block Size × Associativity)`
+- **Number of Blocks per Set** = `Associativity`
+- **Number of Data Elements per Block** = `Block Size`
+- **Index Bits** = `log2(Number of Sets)`
+- **Offset Bits** = `log2(Block Size)`
+- **Tag Bits** = `Remaining bits from memory address`
 
-== input ==
-cache size,block size,latency,assosciativity for 2 level caches
- enter cachesize and block size in bytes
- 
+---
+
+## **Cache Initialization**
+- All blocks are initialized with:
+  - **Tag = NULL**
+  - **Data = -1000000 (invalid value)**
+  - **Dirty Bit = 0**
+
+---
+
+## **Address Breakdown**
+When executing **`lw` (load word)** and **`sw` (store word)** instructions, the memory address is split into three parts:
+- **Tag** → Identifies the block in memory.
+- **Index** → Selects the set in cache.
+- **Offset** → Locates the specific data element within a block.
+
+---
+
+## **Cache Lookup Process**
+### **Step 1: Extract Address Fields**
+1. Use **Index** to locate a specific **Set**.
+2. Use **Tag** to search within the blocks of that **Set**.
+3. Use **Offset** to locate a specific data element inside a block.
+
+---
+
+## **Cache Hit & Miss Cases**
+### **1. Found in L1 Cache (L1 Cache Hit)**
+- **For `lw`**: Fetch the required data element.
+- **For `sw`**: Update the data element and set the **dirty bit to 1**.
+
+### **2. Not Found in L1, Found in L2 (L2 Cache Hit)**
+- **For `lw`**: Fetch data from L2 and move it to L1.
+- **For `sw`**: Update data in L2, set **dirty bit to 1**, and also move data to L1.
+- **Handling L1 Replacement:**
+  - If **empty space exists**, insert data into L1.
+  - If **L1 is full**, apply **LRU (Least Recently Used) replacement**.
+  - If the replaced block **exists in L2**, update **data, dirty bit, and LRU counter**.
+
+### **3. Not Found in L1 and L2 (Miss in Both Caches)**
+- **Handling L1 Miss:**
+  1. If space is available, insert the block.
+  2. If L1 is full, apply **LRU replacement**.
+- **Handling L2 Miss:**
+  1. If space is available, insert the block.
+  2. If L2 is full, apply **LRU replacement**.
+- **Check if the replaced block is in L1** and update it accordingly.
+
+---
+
+## **Hit Rate Calculation**
+The **cache hit rate** is calculated using:
+```
+Hit Rate = (Number of Hits) / (Total lw/sw Instructions)
+```
+
+---
+
+## **Limitations**
+- **Caches must have the same block size** to avoid complexity in block transfers between L1 and L2.
+- **Different block sizes** require additional logic to handle replacement scenarios where **partial blocks** must be checked.
+
+---
+
+## **Example Input Format**
+User needs to enter:
+```
+Enter L1 Cache Size (in bytes): 4096
+Enter L1 Block Size (in bytes): 64
+Enter L1 Associativity: 2
+Enter L2 Cache Size (in bytes): 16384
+Enter L2 Block Size (in bytes): 64
+Enter L2 Associativity: 4
+```
+
+---
+
+## **Final Thoughts**
+This **MIPS simulator** efficiently handles:
+- **Pipelining with Forwarding** to reduce stalls.
+- **Two-Level Caching** with **configurable** parameters.
+- **LRU Policy** for cache block replacement.
+- **Hit Rate Tracking** to evaluate performance.
+
+Would you like an **example run-through** with **debugging information and execution flow diagrams?** 🚀
+
